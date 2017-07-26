@@ -25,6 +25,7 @@ keystone.init({
 	'session': true,
 	'auth': true,
 	'user model': 'User',
+	'port': 3030,
 });
 
 // Load your project's Models
@@ -46,7 +47,7 @@ keystone.set('routes', require('./routes'));
 keystone.set('google server api key', 'AIzaSyBVeB5NeiF1gFhRgHEVqpJDj5Vm4xr-4Do');
 keystone.set('google api key', 'AIzaSyATpr8Thd3NSb-WCsidKjqb5QM3RTq7tYo');
 
-
+keystone.set('cors allow origin', true);
 // Configure the navigation bar in Keystone's Admin UI
 keystone.set('nav', {
 	posts: ['posts', 'post-categories'],
