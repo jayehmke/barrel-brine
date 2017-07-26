@@ -44,8 +44,8 @@ keystone.set('locals', {
 // Load your project's Routes
 keystone.set('routes', require('./routes'));
 
-keystone.set('google server api key', 'AIzaSyBVeB5NeiF1gFhRgHEVqpJDj5Vm4xr-4Do');
-keystone.set('google api key', 'AIzaSyATpr8Thd3NSb-WCsidKjqb5QM3RTq7tYo');
+keystone.set('google server api key', process.env.GOOGLE_SERVER_API_KEY);
+keystone.set('google api key', process.env.GOOGLE_API_KEY);
 
 keystone.set('cors allow origin', true);
 // Configure the navigation bar in Keystone's Admin UI
