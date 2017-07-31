@@ -2,6 +2,7 @@ const async = require('async');
 const keystone = require('keystone');
 
 const ProductCategory = keystone.list('ProductCategory');
+const Product = keystone.list('Product');
 
 exports.options = function (req, res) {
 	res.send({
@@ -20,6 +21,30 @@ exports.list = function (req, res) {
 
 			res.send({
 				categories: items,
+			});
+
+		});
+};
+
+exports.listWithProducts = function (req, res) {
+	ProductCategory.model.find()
+		.exec(function (err, categories) {
+
+			keystone.populateRelated(categories, 'products', function (err) {
+				// ... you have categories with posts
+				if (err) return res.send('database error', err);
+				// console.log('catz', categories)
+				const newArray = categories.map(function (category) {
+					return {
+						category: category,
+						products: category.products,
+					}
+				})
+
+				res.send({
+					categories: newArray
+				})
+
 			});
 
 		});

@@ -45,6 +45,9 @@ exports = module.exports = function (app) {
 
 	app.get('/api/location/list', keystone.middleware.cors, routes.api.location.list);
 	app.get('/api/category/list', keystone.middleware.cors, routes.api.category.list);
+	
+	app.options('/api/category/list/products', keystone.middleware.cors, routes.api.location.options);
+	app.get('/api/category/list/products', keystone.middleware.cors, routes.api.category.listWithProducts);
 	// app.all('/api/store/create', keystone.middleware.api, routes.api.store.create);
 	app.get('/api/location/:id', keystone.middleware.cors, routes.api.location.get);
 	// app.all('/api/store/:id/update', keystone.middleware.api, routes.api.store.update);

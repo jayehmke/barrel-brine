@@ -2,6 +2,7 @@ const async = require('async');
 const keystone = require('keystone');
 
 const Location = keystone.list('Location');
+const Category = keystone.list('ProductCategory');
 
 exports.options = function (req, res) {
 	res.send({
@@ -12,18 +13,87 @@ exports.options = function (req, res) {
 /**
  * List Locations
  */
+
+
+function getHomeCoords(coordinates) {
+
+	return new Promise(function (res, rej) {
+
+		if (coordinates) {
+			try {
+				console.log(JSON.parse(coordinates))
+				const coords = JSON.parse(coordinates);
+				res([
+					coords.lng,
+					coords.lat
+				])
+			} catch (e) {
+				rej(e);
+			}
+
+		} else {
+			Location.model.findOne()
+				.where('name', 'Barrel & Brine')
+				.exec(function (err, item) {
+
+					if (err) console.log(err);
+
+					res(item.address.geo);
+				})
+		}
+
+	})
+
+}
+
 exports.list = function (req, res) {
-	Location.model.find()
-		.exec(function (err, items) {
 
-			if (err) return res.send('database error', err);
+	const categories = req.query.categories;
+	const coordinateJson = req.query.coordinates;
+	const coordinates = getHomeCoords(coordinateJson);
+	const range = req.query.range || 5000;
+	
+	coordinates
+		.then(function (coords) {
 
-			res.send({
-				locations: items,
-			});
+			const query = Location.model.find({
+					"address.geo": {
+						$near: {
+							$geometry: { type: "Point", coordinates: coords },
+							$maxDistance: range * 1609.34
+						}
+					}
+				}
+			);
+			if (categories) {
+				const categoryIds = categories.split(',').filter(String);
+				query
+					.where('categories')
+					.all(categoryIds)
+					.exec(function (err, items) {
+						if (err) {
+							console.log(err);
+							return false
+						}
+						return res.send({
+							locations: items,
+						});
+					});
+			}
+			else {
+				query
+					.exec(function (err, items) {
+						if (err) return res.send('database error', err);
+						res.send({
+							locations: items,
+						});
+					});
+			}
+		})
+	;
 
-		});
-};
+}
+;
 
 /**
  * Get Location by ID
