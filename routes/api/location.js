@@ -32,14 +32,19 @@ function getHomeCoords(coordinates) {
 			}
 
 		} else {
-			Location.model.findOne()
-				.where('name', 'Barrel & Brine')
-				.exec(function (err, item) {
+			try {
+				Location.model.findOne()
+					.where('name', 'Barrel & Brine')
+					.exec(function (err, item) {
 
-					if (err) console.log(err);
+						if (err) console.log(err);
 
-					res(item.address.geo);
-				})
+						res(item.address.geo);
+					})
+			} catch(e) {
+				res({locations: []})
+			}
+			
 		}
 
 	})
