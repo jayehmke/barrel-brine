@@ -38,8 +38,14 @@ function getHomeCoords(coordinates) {
 					.exec(function (err, item) {
 
 						if (err) console.log(err);
+						
+						try {
+							res(item.address.geo);
+						} catch(e) {
+							res(null)
+						}
 
-						res(item.address.geo);
+						
 					})
 			} catch(e) {
 				res({locations: []})
