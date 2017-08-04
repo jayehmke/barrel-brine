@@ -34,7 +34,7 @@ function getHomeCoords(coordinates) {
 		} else {
 			try {
 				Location.model.findOne()
-					.where('name', 'Barrel & Brine')
+					.where('name', 'Barrel + Brine')
 					.exec(function (err, item) {
 
 						if (err) console.log(err);
