@@ -45,6 +45,8 @@ exports = module.exports = function (app) {
 
 	app.get('/api/location/list', keystone.middleware.cors, routes.api.location.list);
 	app.get('/api/category/list', keystone.middleware.cors, routes.api.category.list);
+	app.get('/api/banner/list', keystone.middleware.cors, routes.api.banner.list);
+	app.get('/api/product/list', keystone.middleware.cors, routes.api.product.list);
 	
 	app.options('/api/category/list/products', keystone.middleware.cors, routes.api.location.options);
 	app.get('/api/category/list/products', keystone.middleware.cors, routes.api.category.listWithProducts);
