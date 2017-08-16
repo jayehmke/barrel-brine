@@ -13,7 +13,7 @@ var Banner = new keystone.List('Banner', {
 Banner.add({
 	name: { type: Types.Text, required: true, initial: true, },
 	publishedDate: { type: Date, default: Date.now },
-	image: { type: Types.CloudinaryImage, required: true, initial: true, },
+	image: { type: Types.CloudinaryImage, required: true, initial: true, autoCleanup: true, },
 	sortOrder: { type: Types.Number },
 	isActive: { type: Types.Boolean }
 });

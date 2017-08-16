@@ -13,10 +13,10 @@ exports.options = function (req, res) {
 exports.list = function (req, res) {
 
 
-	ig.use({ access_token: '35016196.a66e464.149607b41fa047b3a9984eb8fda7ca2f' });
+	ig.use({ access_token: '2313350488.2407398.05ab8e304fba45f99b1f4fbce58df698' });
 
 
-	ig.user_media_recent('35016196', [], function(err, medias, pagination, remaining, limit) {
+	ig.user_media_recent('2313350488', [], function(err, medias, pagination, remaining, limit) {
 
 		if (err) return res.send('database error', err);
 
